@@ -97,6 +97,16 @@ mainloop:
         sub si, 1               ; decrease si by one and set flags
         jnz .for_x              ; repeat for x-length times
         pop si   
+
+        ; delay 1 second
+        mov cx, 0fh
+        mov dx, 4240h
+        mov ah, 86h
+        int 15h
+
+        ; reset to default video mode
+        mov ax, 0003h
+        int 10h
         
         jmp mainloop            ; back to the mainloop
 
@@ -252,11 +262,11 @@ time: db 'time', 0
 about: db 'about', 0
 box: db 'box', 0
 
-msg: db 'OS v1', 0x0D, 0x0A, 0
-prompt: db '$:', 0 
+msg: db 'OS', 0x0D, 0x0A, 0
+prompt: db '>', 0 
 helpMsg: db "commands: help, about, time, box", 0x0D, 0x0A, 0
 invalidMsg: db 'invalid command', 0x0D, 0x0A, 0
-aboutMsg: db 'simple os, with simple commands', 0x0D, 0x0A, 0
+aboutMsg: db ' [ simple os :) ]', 0x0D, 0x0A, 0
 timeMsg: db "00h:00m:00s", 0x0D, 0x0A, 0 ; time command string placehoder
 
 times 510-($-$$) db 0
