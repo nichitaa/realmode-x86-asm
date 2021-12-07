@@ -191,7 +191,7 @@ input:
         cmp al, 0x0D                ; if enter pressed 
         je .done                    ; go to enter handler (done)
 
-        cmp cl, 0x14                ; if 20 chars were alreay inputted 
+        cmp cl, 0x5                 ; if 5 chars were alreay inputted 
         je .loop                    ; allow backspace & enter
 
         mov ah, 0hE
@@ -253,8 +253,8 @@ print:
         ret
 
 
-; buffer for user input
-buff: times 64 db 0 
+; buffer for user input (max command is 5 chars long)
+buff: times 5 db 0 
 
 ; custom commands keywords
 help: db 'help', 0               
@@ -264,10 +264,10 @@ box: db 'box', 0
 
 msg: db 'OS', 0x0D, 0x0A, 0
 prompt: db '>', 0 
-helpMsg: db "commands: help, about, time, box", 0x0D, 0x0A, 0
-invalidMsg: db 'invalid command', 0x0D, 0x0A, 0
-aboutMsg: db ' [ simple os :) ]', 0x0D, 0x0A, 0
-timeMsg: db "00h:00m:00s", 0x0D, 0x0A, 0 ; time command string placehoder
+helpMsg: db 'available commands: help, about, time, box', 0x0D, 0x0A, 0
+invalidMsg: db 'invalid command :( please use help command to list all commands', 0x0D, 0x0A, 0
+aboutMsg: db ' SIMPLE OS :)', 0x0D, 0x0A, 0
+timeMsg: db '00h:00m:00s', 0x0D, 0x0A, 0 ; time command string placehoder
 
 times 510-($-$$) db 0
 dw 0xaa55 ; some BIOSes require this signature
